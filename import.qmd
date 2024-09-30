@@ -28,7 +28,8 @@ We will take advantage of the RStudio projects and store data files in a sub-fol
 5. Add a code chunk to load the libraries. You only need `readr`.
 
 ```{r}
-# Your answer in code
+install.packages("readr")
+library("readr")
 
 ```
 
@@ -77,7 +78,8 @@ For example, you folder structure could be (depending on the picked names) as he
 
 
 ```{r}
-# Your answer in code
+download.file("https://biostat2.uni.lu/practicals/data/blood_fat.csv",
+              "data/blood_fat.csv")
 
 ```
 
@@ -91,7 +93,8 @@ If we are happy with the guessed delimiter and the column names / types, we coul
 ##### Load again the same file, silencing the `read_delim()` message
 
 ```{r}
-# Your answer in code
+readr::read_delim("data/blood_fat.csv", 
+                  show_col_types = FALSE)
 
 
 ```
@@ -106,7 +109,7 @@ If we are happy with the guessed delimiter and the column names / types, we coul
 
 
 
-> Your answer as text
+Rows: 25 Columns: 5── Column specification 
 
 
 
@@ -114,7 +117,8 @@ If we are happy with the guessed delimiter and the column names / types, we coul
 
 
 
-> Your answer as text
+chr (1): group
+dbl (4): id, weight, age, fat
 
 
 
@@ -130,9 +134,12 @@ In the `col_types = cols(....)` you can use the columns bare names and either th
 
 
 ```{r}
-# Your answer in code
-
-
+readr::read_delim("data/blood_fat.csv", 
+                   col_types = cols(
+                                    id = col_integer(),
+                                    age = col_integer()
+                                   )
+                 )
 
 ```
 
@@ -140,11 +147,13 @@ In the `col_types = cols(....)` you can use the columns bare names and either th
 ### Read the `blood_fat.csv` specifying the data types of `age` and `id` as integers, skipping `weight`.
 
 ```{r}
-# Your answer in code
-
-
-
-
+readr::read_delim("data/blood_fat.csv", 
+                   col_types = cols(
+                                    id = "i",
+                                    age = "i"
+                                   ),
+                   col_select = c(id, group, age, fat)
+                 )
 ```
 
 
